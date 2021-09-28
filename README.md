@@ -24,6 +24,6 @@ Microservice is written using PHP and SQL
 
 You need to run apache and MySQL server, run `db.sql` to create assets table and one example row. PHP script connects to
 localhost DB at port `3306`, it handles requests by detecting request method, checking its parameters and executing SQL 
-query. I also rewrite ID from path parameter to query one, although the user doesn't notice, it is done by RewriteRule
-in `.htaccess` file.
+query, it is in the assets folder to match specification of path. I also rewrite ID from path parameter to query one, 
+although the user doesn't notice, it is done by RewriteRule in `.htaccess` file.
 
