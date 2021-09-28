@@ -10,7 +10,7 @@ CLI tool is written as Python script
 
 Usage: <br>
 ```
-py twentythree.py method [id] [--type \<photo|video\>] [--title \<title\>] [--label \<label\>] [--url \<valid url\>]
+py twentythree.py method [id] [--type <photo|video>] [--title <title>] [--label <label>] [--url <valid url>]
 ```
 
 To execute tests, run given command in the root directory:
