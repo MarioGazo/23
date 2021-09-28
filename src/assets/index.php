@@ -38,7 +38,7 @@ function read_assets() {
     }
     // Output data
     while($row = $result->fetch_assoc()) {
-        echo "{$row['id']},{$row['type']},{$row['title']},{$row['label']},{$row['url']}".PHP_EOL;
+        echo json_encode($row);
     }
 }
 
