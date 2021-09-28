@@ -46,20 +46,23 @@ function read_assets() {
  * Create asset if all values are set
  */
 function create_asset() {
-    $body = json_decode(file_get_contents('php://input'),1);
+    $body = $_REQUEST;
     // Check if all params are set
     if (!isset($body['type']) || !isset($body['title']) || !isset($body['label']) || !isset($body['url'])) {
         exit(400); // Bad request
     }
 
     // Type can only be photo or video
-    if (array_intersect(['photo', 'video'], [$body['type']])) {
+    if (!array_intersect(['photo', 'video'], [$body['type']])) {
         exit(400); // Bad request
     }
 
     // Insert data, id is set automatically
-    $GLOBALS['conn']->query("INSERT INTO assets (type, title, label, url)".
-        " VALUES ('{$body['type']}','{$body['title']}','{$body['label']}','{$body['url']}')");
+    if (!$GLOBALS['conn']->query("INSERT INTO assets (type, title, label, url)".
+        " VALUES ('{$body['type']}','{$body['title']}','{$body['label']}','{$body['url']}')")) {
+        echo "INSERT FAILED";
+        exit(400); // Bad request
+    }
 }
 
 /**
@@ -74,14 +77,13 @@ function update_asset() {
     $body = json_decode(file_get_contents('php://input'),1);
 
     // Try to update title, label and url
-    if (isset($body['title'])) {
-        $GLOBALS['conn']->query("UPDATE assets SET title='{$body['title']}' WHERE id={$_REQUEST['id']}");
-    }
-    if (isset($body['label'])) {
-        $GLOBALS['conn']->query("UPDATE assets SET label='{$body['label']}' WHERE id={$_REQUEST['id']}");
-    }
-    if (isset($body['url'])) {
-        $GLOBALS['conn']->query("UPDATE assets SET url='{$body['url']}' WHERE id={$_REQUEST['id']}");
+    foreach (['title', 'label', 'url'] as $col) {
+        if (isset($body[$col])) {
+            if (!$GLOBALS['conn']->query("UPDATE assets SET $col='{$body[$col]}' WHERE id={$_REQUEST['id']}")) {
+                echo "UPDATE FAILED";
+                echo(400); // Bad request
+            }
+        }
     }
 }
 
@@ -95,6 +97,9 @@ function delete_asset() {
     }
 
     // Delete asset with given id
-    $GLOBALS['conn']->query("DELETE FROM assets WHERE id={$_REQUEST['id']}");
+    if (!$GLOBALS['conn']->query("DELETE FROM assets WHERE id={$_REQUEST['id']}")) {
+        echo "DELETE FAILED";
+        exit(400); // Bad request
+    }
 }
 

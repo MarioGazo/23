@@ -58,7 +58,7 @@ class TwentyThree:
         # Send POST request
         return requests.post(
             self.REQUEST_URL,
-            json={'type': self.args.type, 'title': self.args.title, 'label': self.args.label, 'url': self.args.url}
+            {'type': self.args.type, 'title': self.args.title, 'label': self.args.label, 'url': self.args.url}
         )
 
     def read(self) -> requests.request:
