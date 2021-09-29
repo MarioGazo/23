@@ -96,7 +96,7 @@ class TwentyThree:
         return requests.delete(self.REQUEST_URL + str(self.args.id))
 
     def check_url_invalidity(self) -> bool:
-        """ Returns True if URL is valid, False if it is not """
+        """ Returns True if URL is invalid, False if it is not """
         validate = URLValidator()
         try:
             validate(self.args.url)
