@@ -40,7 +40,6 @@ app.delete('/assets/:id', function(req, res){
                 return console.log(err);
             }
         });
-        res.end(JSON.stringify(jsonData[req.params.id], null, 2));
     });
 });
 
