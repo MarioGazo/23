@@ -1,6 +1,7 @@
 from src.twentythree import TwentyThree
 import pytest
 import sys
+import json
 
 
 def test_update_correct_single():
@@ -66,7 +67,9 @@ def test_update_row_one():
     tt = TwentyThree()
     assert tt.method == 'read'
     assert tt.args.id == 1
-    assert tt.response.text == '1,photo,abcd,label,https://google.com\n'
+    assert json.loads(tt.response.text) == json.loads(
+        """{"type": "photo","title": "abcd","label": "label","url": "https://google.com"}"""
+    )
 
     sys.argv = ['test', 'update', '1', '--title', 'title']
     tt = TwentyThree()

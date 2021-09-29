@@ -1,5 +1,6 @@
 from src.twentythree import TwentyThree
 import sys
+import json
 
 
 def test_read_correct_single():
@@ -36,4 +37,6 @@ def test_row_one():
     assert tt.args.title is None
     assert tt.args.label is None
     assert tt.args.url is None
-    assert tt.response.text == '1,photo,title,label,https://google.com\n'
+    assert json.loads(tt.response.text) == json.loads(
+        """{"type": "photo","title": "title","label": "label","url": "https://google.com"}"""
+    )
