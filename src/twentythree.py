@@ -41,6 +41,7 @@ class TwentyThree:
         # Check response
         if self.response.status_code != 200:
             raise Exception('Request failed, code: '+str(self.response.status_code))
+        print(self.response.text)
 
     def create(self) -> requests.request:
         """ Create asset, need correct type, title,  label and url """
@@ -83,7 +84,7 @@ class TwentyThree:
         # Send PUT request
         return requests.put(
             self.REQUEST_URL + str(self.args.id),
-            json={'title': self.args.title, 'label': self.args.label, 'url': self.args.url}
+            {'title': self.args.title, 'label': self.args.label, 'url': self.args.url}
         )
 
     def delete(self) -> requests.request:
